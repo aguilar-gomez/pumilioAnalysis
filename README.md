@@ -26,3 +26,7 @@ Analysis of Bocas del Toro exome sequecing Oophaga pumilio samples
     - read fails platform/vendor quality checks (0x200)
     - read is PCR or optical duplicate (0x400)
     - 1804
+    
+ ## 3 Filtering:
+ - Angsd
+ - snpCleaner
