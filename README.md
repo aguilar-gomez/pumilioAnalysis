@@ -48,3 +48,8 @@ Analysis of Bocas del Toro exome sequecing Oophaga pumilio samples
   - min p-value for exact test of HWE:0
   - Minimum individuals with 1x: 200
 
+
+ ## 4 Population structure:
+ - PCAngsd
+ 
+
