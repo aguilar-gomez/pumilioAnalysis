@@ -20,24 +20,15 @@ Analysis of Bocas del Toro exome sequecing Oophaga pumilio samples
 - Bwa mem
 - Samtools:
   - Samfile flags to exclude:
-    - read unmapped (0x4)
-    - mate unmapped (0x8)
-    - not primary alignment (0x100)
-    - read fails platform/vendor quality checks (0x200)
-    - read is PCR or optical duplicate (0x400)
+    - read unmapped (0x4), mate unmapped (0x8), not primary alignment (0x100), read fails platform/vendor quality checks (0x200), read is PCR or optical duplicate (0x400)
     - 1804
     
  ## 3 Filtering:
 - Angsd:
-  - Minimum individuals with 1x: 250 
-  - minMapQ: 25
-  - minQ: 25
+  - Minimum individuals with 1x: 250, Maximum depth per individual: 50x
+  - minMapQ: 25, minQ: 25
   - SNP_pval: 1e-6 (this was removed when we wanted to process all sites including non-variant)
-  - Maximum depth per individual: 50x
-  - skipTriallelic
-  - Remove_bads
-  - uniqueOnly
-  - onlyProper pairs
+  - skipTriallelic, Remove_bads, uniqueOnly, onlyProper pairs
 
 - snpCleaner
   - Excess of heterozygous pval: 1e-6
@@ -45,9 +36,6 @@ Analysis of Bocas del Toro exome sequecing Oophaga pumilio samples
   - Strand bias pval: 1e-4
   - End distance bias pval: 1e-4
   - Map quality bias pval: 1e-4
-  - min p-value for exact test of HWE:0
-  - Minimum individuals with 1x: 200
-
 
  ## 4 Population structure:
  - PCAngsd
