@@ -19,10 +19,10 @@ Analysis of Bocas del Toro exome sequecing Oophaga pumilio samples
 
 - Bwa mem
 - Samtools:
-  Samfile flags to exclude:
-    read unmapped (0x4)
-    mate unmapped (0x8)
-    not primary alignment (0x100)
-    read fails platform/vendor quality checks (0x200)
-    read is PCR or optical duplicate (0x400)
-    1804
+  - Samfile flags to exclude:
+    - read unmapped (0x4)
+    - mate unmapped (0x8)
+    - not primary alignment (0x100)
+    - read fails platform/vendor quality checks (0x200)
+    - read is PCR or optical duplicate (0x400)
+    - 1804
