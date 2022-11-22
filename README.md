@@ -28,7 +28,7 @@ Analysis of Bocas del Toro exome sequecing Oophaga pumilio samples
     - 1804
     
  ## 3 Filtering:
- - Angsd:
+- Angsd:
   - Minimum individuals with 1x: 250 
   - minMapQ: 25
   - minQ: 25
@@ -39,7 +39,7 @@ Analysis of Bocas del Toro exome sequecing Oophaga pumilio samples
   - uniqueOnly
   - onlyProper pairs
 
- - snpCleaner
+- snpCleaner
   - Excess of heterozygous pval: 1e-6
   - Base quality bias pval: 1e-100
   - Strand bias pval: 1e-4
