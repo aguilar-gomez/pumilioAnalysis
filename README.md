@@ -39,8 +39,18 @@ Analysis of Bocas del Toro exome sequecing Oophaga pumilio samples
  ## 4 Population structure:
  - PCAngsd
 
-## Color genomics:
+## 5 Color genomics
 - gemma
 - selscan
 - PBS and FST scans
 
+## 6 Selection test
+- HKA test
+- Tajima`s D
+- Pi
+
+## Demographic History
+- dadi
+- Treemix
+- Admixed Bayes
+- 4-pop test
