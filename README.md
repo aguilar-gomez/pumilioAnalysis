@@ -49,7 +49,7 @@ Analysis of Bocas del Toro exome sequecing Oophaga pumilio samples
 - Tajima`s D
 - Pi
 
-## Demographic History
+## 7 Demographic History
 - dadi
 - Treemix
 - Admixed Bayes
