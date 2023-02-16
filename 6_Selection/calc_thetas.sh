@@ -15,6 +15,7 @@ REF=/space/s2/diana/pumilio/rescaffolded_genome/Opum.rescaffold.fasta
 
 #Calculate thetas
 realSFS saf2theta $pop.saf.idx -sfs $pop.folded.sfs -outname $pop
+thetaStat print $pop.thetas.idx > $pop.thetas.persite.txt
 
 #For Dxy
 nohup realSFS -P 4 $POP.r.saf.idx -sites $pop1.$pop2.shared.pos -fold 1 1> Results/$POP.sfs 2>Results/$POP.outsfs &
