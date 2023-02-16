@@ -1,3 +1,6 @@
+#Get shared sites
+realSFS print $pop1.r.saf.idx $pop2.r.saf.idx -oldout 1
+
 #Calculate site frequency spectrum
 outdir=$1
 sites_file=$2
