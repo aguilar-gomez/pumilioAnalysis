@@ -20,9 +20,9 @@ from dadi import Numerics, PhiManip, Integration, Spectrum
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("n_sim", type=int, help="number of simulations")
-parser.add_argument("pop1", type=str, help="name of population 1")
-parser.add_argument("pop2", type=str, help="name of population 2")
+parser.add_argument("--n_sim", type=int, help="number of simulations")
+parser.add_argument("--pop1", type=str, help="name of population 1")
+parser.add_argument("--pop2", type=str, help="name of population 2")
 
 args = parser.parse_args()
 
