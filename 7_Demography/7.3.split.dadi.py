@@ -90,7 +90,7 @@ p0 = dadi.Misc.perturb_params(params, fold=1, upper_bound=upper_bounds,
 # At the end of the optimization we will get the
 # optimal parameters and log-likelihood.
 # Verbose is how many evaluations are done before pàrameter is printed
-popt = dadi.Inference.opt(p0, inputfs, func_ex, pts_l,
+popt = dadi.Inference.optimize_log(p0, inputfs, func_ex, pts_l,
                                     lower_bound=lower_bounds,
                                     upper_bound=upper_bounds,
                                     maxiter=maxiter, verbose=0)
