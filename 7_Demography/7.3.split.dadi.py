@@ -137,7 +137,7 @@ scaled_param_names=("Nref","Nu1","Nu2","split_time_years")
 scaled_popt=(Nref,Ne1,Ne2,split_time)
 
 #### Write output                          
-outputFile=open(datset+".dadi.inference.run."+str(args.n_sim)+".output","w")
+outputFile=open(dataset+".dadi.inference.run."+str(args.n_sim)+".output","w")
 # get all param names:
 param_names_str='\t'.join(str(x) for x in param_names)
 scaled_param_names_str='\t'.join(str(x) for x in scaled_param_names)
@@ -154,7 +154,7 @@ outputFile.close()
 ############### Output SFS ########################
 print('Writing out SFS **************************************************')                                   
 
-outputSFS=datset+".dadi.inference.run."+str(args.n_sim)+".sfs"
+outputSFS=dataset+".dadi.inference.run."+str(args.n_sim)+".sfs"
 model_fs.to_file(outputSFS)
 
 ############### Output plot ########################
@@ -163,7 +163,7 @@ print('Making plots **************************************************')
 #import pylab
 import matplotlib.pyplot as plt 
 fig=plt.figure(1)
-outputFigure=datset+".dadi.inference.run."+str(args.n_sim)+".png"
+outputFigure=dataset+".dadi.inference.run."+str(args.n_sim)+".png"
 dadi.Plotting.plot_2d_comp_multinom(model_fs, inputfs)
 plt.savefig(outputFigure)
 
