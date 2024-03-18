@@ -130,7 +130,7 @@ g=2
 #Scale parameters to be diploid
 Ne1=popt[0]*Nref
 Ne2=popt[1]*Nref
-split_time=popt[3]*2*Nref*g
+split_time=popt[2]*2*Nref*g
 
 
 scaled_param_names=("Nref","Nu1","Nu2","split_time_years")
