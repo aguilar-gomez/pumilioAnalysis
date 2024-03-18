@@ -32,7 +32,7 @@ inputfs = dadi.Spectrum.from_file(dataset+".2dfs")
 #Calculate Fst
 fst=inputfs.Fst()
 
-print("Analizying",args.pop1, args.pop2, "with Fst:", fst, "\n number of ompimization:",args.n_sim)
+print("Analizying",args.pop1, args.pop2, "with Fst:", fst, "number of optimization:",args.n_sim)
 
 #Retrive the sample sizes from the data
 ns = inputfs.sample_sizes
