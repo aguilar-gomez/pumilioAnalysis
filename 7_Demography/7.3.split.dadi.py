@@ -67,17 +67,17 @@ func_ex = dadi.Numerics.make_extrap_log_func(func)
 # Define starting parameters
 #First two parameters effective pop size, 
 #Times are given in units of 2Nref (reference population size) generations
-#s,nu1,nu2,T,m12,m21 = params
+#n1,n2,T = params
 
-params = [.5,10, 10, .5, 0,0]
+params = [1,1,1]
 
 # Define boundaries of optimization.
 # It is a good idea to have boundaries to avoid optimization
 # from trying parameter sets that are time consuming without
 # nessicarily being correct.
 # If optimization infers parameters very close to the boundaries, we should increase them.
-lower_bounds = [1e-3, 1e-3, 1e-3, 1e-3, 0, 0]
-upper_bounds = [1,2000, 2000, 3000, 0,0]
+lower_bounds = [1e-3, 1e-3, 1e-3]
+upper_bounds = [200, 200, 300]
 maxiter=100
 
 # Perturb parameters
