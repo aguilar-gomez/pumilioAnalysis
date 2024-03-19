@@ -105,19 +105,17 @@ ll_model = dadi.Inference.ll_multinom(model_fs, inputfs)
 # also get the LL of the data to itself (best possible ll)
 ll_data=dadi.Inference.ll_multinom(inputfs, inputfs)
 
-
+############### Scale parameters ########################
 '''
 The Nref is calculated by the following equation:
 Theta = 4 * Nref * mu * L
 Nref=Theta/(4*mu*L)
 
 L is the total length of DNA sequence (in bp) that was analyzed in order to obtain the SNP data
-
 We mapped all sequencing reads for 30 sequence data to the  reference  genome,  
 then  used  samtools  to  call  SNPs.Heterozygosity across the assembled sections
-of theO. pumiliogenome is H=0.0016. 
+of the O. pumilio genome is H=0.0016. 
 Assuming a mutation rate of 10-9, this would yield an estimate of Ne=400,000. 
-
 '''
 
 mu=10e-9
@@ -136,12 +134,12 @@ split_time=popt[2]*2*Nref*g
 scaled_param_names=("Nref","Nu1","Nu2","split_time_years")
 scaled_popt=(Nref,Ne1,Ne2,split_time)
 
-#### Write output                          
+############### Write output ########################                         
 outputFile=open(dataset+".dadi.inference.run."+str(args.n_sim)+".output","w")
 # get all param names:
 param_names_str='\t'.join(str(x) for x in param_names)
 scaled_param_names_str='\t'.join(str(x) for x in scaled_param_names)
-header=param_names_str+"\t"+scaled_param_names_str+"\ttheta\tLL\tLL_data\tmodelFunction\tmu\tL\tmaxiter\trunNumber\tinitialParameters\tupper_bound\tlower_bound" # add additional parameters theta, log-likelihood, model name, run number and rundate
+header=param_names_str+"\t"+scaled_param_names_str+"\ttheta\tLL\tLL_data\tmu\tL\tmaxiter\trunNumber\tinitialParameters\tupper_bound\tlower_bound" # add additional parameters theta, log-likelihood, model name, run number and rundate
 popt_str='\t'.join(str(x) for x in popt) # get opt'd parameters as a tab-delim string
 scaled_popt_str='\t'.join(str(x) for x in scaled_popt)
 # joint together all the output fields, tab-separated:
@@ -160,8 +158,6 @@ model_fs.to_file(outputSFS)
 ############### Output plot ########################
 print('Making plots **************************************************')                                   
 
-#import pylab
-import matplotlib.pyplot as plt 
 fig=plt.figure(1)
 outputFigure=dataset+".dadi.inference.run."+str(args.n_sim)+".png"
 dadi.Plotting.plot_2d_comp_multinom(model_fs, inputfs)
