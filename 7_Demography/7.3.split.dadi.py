@@ -128,6 +128,7 @@ g=2
 #Scale parameters to be diploid
 Ne1=popt[0]*Nref
 Ne2=popt[1]*Nref
+#Time is in units T=2Nref generations from dadi's manual
 split_time=popt[2]*2*Nref*g
 
 
