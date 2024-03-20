@@ -130,11 +130,16 @@ g=2
 #Scale parameters to be diploid
 Ne1=popt[0]*Nref
 Ne2=popt[1]*Nref
+#Time is in units T=2Nref generations 
 split_time=popt[2]*2*Nref*g
+#Migration rate is obtained by dividing by 2Nref
+#mij=Mij/(2*Nref) 
+#mij=fraction of individuals in each generation in population i who are new migrants from population j.
+m=popt[3]/(2*Nref)
 
 
-scaled_param_names=("Nref","Nu1","Nu2","split_time_years")
-scaled_popt=(Nref,Ne1,Ne2,split_time)
+scaled_param_names=("Nref","Nu1","Nu2","split_time_years","migrationRate")
+scaled_popt=(Nref,Ne1,Ne2,split_time,m)
 
 #### Write output                          
 outputFile=open(dataset+".dadi.inference.run."+str(args.n_sim)+".output","w")
