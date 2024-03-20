@@ -20,9 +20,9 @@ from dadi import Numerics, PhiManip, Integration, Spectrum
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("n_sim", type=int, help="number of simulations")
-parser.add_argument("pop1", type=str, help="name of population 1")
-parser.add_argument("pop2", type=str, help="name of population 2")
+parser.add_argument("--n_sim", type=int, help="number of simulations")
+parser.add_argument("--pop1", type=str, help="name of population 1")
+parser.add_argument("--pop2", type=str, help="name of population 2")
 
 args = parser.parse_args()
 
@@ -32,7 +32,7 @@ inputfs = dadi.Spectrum.from_file(dataset+".2dfs")
 #Calculate Fst
 fst=inputfs.Fst()
 
-print("Analizying",args.pop1, args.pop2, "with Fst:", fst, "\n number of ompimization:",args.n_sim)
+print("Analizying",args.pop1, args.pop2, "with Fst:", fst, "number of optimization:",args.n_sim)
 
 #Retrive the sample sizes from the data
 ns = inputfs.sample_sizes
@@ -67,17 +67,17 @@ func_ex = dadi.Numerics.make_extrap_log_func(func)
 # Define starting parameters
 #First two parameters effective pop size, 
 #Times are given in units of 2Nref (reference population size) generations
-#s,nu1,nu2,T,m12,m21 = params
+#n1,n2,T = params
 
-params = [.5,10, 10, .5, 0,0]
+params = [1,1,1]
 
 # Define boundaries of optimization.
 # It is a good idea to have boundaries to avoid optimization
 # from trying parameter sets that are time consuming without
 # nessicarily being correct.
 # If optimization infers parameters very close to the boundaries, we should increase them.
-lower_bounds = [1e-3, 1e-3, 1e-3, 1e-3, 0, 0]
-upper_bounds = [1,2000, 2000, 3000, 0,0]
+lower_bounds = [1e-3, 1e-3, 1e-3]
+upper_bounds = [200, 200, 300]
 maxiter=100
 
 # Perturb parameters
@@ -90,7 +90,7 @@ p0 = dadi.Misc.perturb_params(params, fold=1, upper_bound=upper_bounds,
 # At the end of the optimization we will get the
 # optimal parameters and log-likelihood.
 # Verbose is how many evaluations are done before pàrameter is printed
-popt = dadi.Inference.opt(p0, inputfs, func_ex, pts_l,
+popt = dadi.Inference.optimize_log(p0, inputfs, func_ex, pts_l,
                                     lower_bound=lower_bounds,
                                     upper_bound=upper_bounds,
                                     maxiter=maxiter, verbose=0)
@@ -105,19 +105,17 @@ ll_model = dadi.Inference.ll_multinom(model_fs, inputfs)
 # also get the LL of the data to itself (best possible ll)
 ll_data=dadi.Inference.ll_multinom(inputfs, inputfs)
 
-
+############### Scale parameters ########################
 '''
 The Nref is calculated by the following equation:
 Theta = 4 * Nref * mu * L
 Nref=Theta/(4*mu*L)
 
 L is the total length of DNA sequence (in bp) that was analyzed in order to obtain the SNP data
-
 We mapped all sequencing reads for 30 sequence data to the  reference  genome,  
 then  used  samtools  to  call  SNPs.Heterozygosity across the assembled sections
-of theO. pumiliogenome is H=0.0016. 
+of the O. pumilio genome is H=0.0016. 
 Assuming a mutation rate of 10-9, this would yield an estimate of Ne=400,000. 
-
 '''
 
 mu=10e-9
@@ -130,22 +128,23 @@ g=2
 #Scale parameters to be diploid
 Ne1=popt[0]*Nref
 Ne2=popt[1]*Nref
-split_time=popt[3]*2*Nref*g
+#Time is in units T=2Nref generations from dadi's manual
+split_time=popt[2]*2*Nref*g
 
 
 scaled_param_names=("Nref","Nu1","Nu2","split_time_years")
 scaled_popt=(Nref,Ne1,Ne2,split_time)
 
-#### Write output                          
-outputFile=open(datset+".dadi.inference.run."+str(args.n_sim)+".output","w")
+############### Write output ########################                         
+outputFile=open(dataset+".dadi.inference.run."+str(args.n_sim)+".output","w")
 # get all param names:
 param_names_str='\t'.join(str(x) for x in param_names)
 scaled_param_names_str='\t'.join(str(x) for x in scaled_param_names)
-header=param_names_str+"\t"+scaled_param_names_str+"\ttheta\tLL\tLL_data\tmodelFunction\tmu\tL\tmaxiter\trunNumber\tinitialParameters\tupper_bound\tlower_bound" # add additional parameters theta, log-likelihood, model name, run number and rundate
+header=param_names_str+"\t"+scaled_param_names_str+"\ttheta\tLL\tLL_data\tmu\tL\tmaxiter\trunNumber\tinitialParameters\tupper_bound\tlower_bound" # add additional parameters theta, log-likelihood, model name, run number and rundate
 popt_str='\t'.join(str(x) for x in popt) # get opt'd parameters as a tab-delim string
 scaled_popt_str='\t'.join(str(x) for x in scaled_popt)
 # joint together all the output fields, tab-separated:
-output=[popt_str,scaled_popt_str,theta0,ll_model,ll_data,mu,L,maxiter,args.n_sim,p0,upper_bound,lower_bound] # put all the output terms together
+output=[popt_str,scaled_popt_str,theta0,ll_model,ll_data,mu,L,maxiter,args.n_sim,p0,upper_bounds,lower_bounds] # put all the output terms together
 output='\t'.join(str(x) for x in output) # write out all the output fields
 # this should result in a 2 row table that could be input into R / concatenated with other runs
 outputFile.write(('{0}\n{1}\n').format(header,output))
@@ -154,16 +153,14 @@ outputFile.close()
 ############### Output SFS ########################
 print('Writing out SFS **************************************************')                                   
 
-outputSFS=datset+".dadi.inference.run."+str(args.n_sim)+".sfs"
+outputSFS=dataset+".dadi.inference.run."+str(args.n_sim)+".sfs"
 model_fs.to_file(outputSFS)
 
 ############### Output plot ########################
 print('Making plots **************************************************')                                   
 
-#import pylab
-import matplotlib.pyplot as plt 
 fig=plt.figure(1)
-outputFigure=datset+".dadi.inference.run."+str(args.n_sim)+".png"
+outputFigure=dataset+".dadi.inference.run."+str(args.n_sim)+".png"
 dadi.Plotting.plot_2d_comp_multinom(model_fs, inputfs)
 plt.savefig(outputFigure)
 
