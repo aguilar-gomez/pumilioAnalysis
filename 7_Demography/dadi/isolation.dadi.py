@@ -58,8 +58,7 @@ param_names=["s","n1","n2","T"]
 #Grid sizes
 # Define the grid points based on the sample size.
 # For smaller data (largest sample size is about <100) [ns+20, ns+30, ns+40] is a good starting point.
-# For larger data (largest sample size is about >=100) or for heavily down projected data [ns+100, ns+110, ns+120] is a good startin
-g point.
+# For larger data (largest sample size is about >=100) or for heavily down projected data [ns+100, ns+110, ns+120] is a good starting point.
 pts_l = [max(ns)+20, max(ns)+30, max(ns)+40]
 
 
@@ -148,8 +147,7 @@ outputFile=open(dataset+".dadi.inference.run."+str(args.n_sim)+".output","w")
 # get all param names:
 param_names_str='\t'.join(str(x) for x in param_names)
 scaled_param_names_str='\t'.join(str(x) for x in scaled_param_names)
-header=param_names_str+"\t"+scaled_param_names_str+"\ttheta\tLL\tLL_data\tmu\tL\tmaxiter\trunNumber\tinitialParameters\tupper_bound\
-tlower_bound" # add additional parameters theta, log-likelihood, model name, run number and rundate
+header=param_names_str+"\t"+scaled_param_names_str+"\ttheta\tLL\tLL_data\tmu\tL\tmaxiter\trunNumber\tinitialParameters\tupper_bound\tlower_bound" # add additional parameters theta, log-likelihood, model name, run number and rundate
 popt_str='\t'.join(str(x) for x in popt) # get opt'd parameters as a tab-delim string
 scaled_popt_str='\t'.join(str(x) for x in scaled_popt)
 # joint together all the output fields, tab-separated:
