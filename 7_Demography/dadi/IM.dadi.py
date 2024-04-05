@@ -53,7 +53,7 @@ def IM(params, ns, pts):
     fs = Spectrum.from_phi(phi, ns, (xx, xx))
     return fs
 
-param_names=["s","n1","n2","T","m12",""m21]
+param_names=["s","n1","n2","T","m12","m21"]
 
 #Grid sizes
 # Define the grid points based on the sample size.
