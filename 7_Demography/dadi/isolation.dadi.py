@@ -151,8 +151,7 @@ header=param_names_str+"\t"+scaled_param_names_str+"\ttheta\tLL\tLL_data\tmu\tL\
 popt_str='\t'.join(str(x) for x in popt) # get opt'd parameters as a tab-delim string
 scaled_popt_str='\t'.join(str(x) for x in scaled_popt)
 # joint together all the output fields, tab-separated:
-output=[popt_str,scaled_popt_str,theta0,ll_model,ll_data,mu,L,maxiter,args.n_sim,p0,upper_bounds,lower_bounds] # put all the output 
-terms together
+output=[popt_str,scaled_popt_str,theta0,ll_model,ll_data,mu,L,maxiter,args.n_sim,p0,upper_bounds,lower_bounds] # put all the output terms together
 output='\t'.join(str(x) for x in output) # write out all the output fields
 # this should result in a 2 row table that could be input into R / concatenated with other runs
 outputFile.write(('{0}\n{1}\n').format(header,output))
