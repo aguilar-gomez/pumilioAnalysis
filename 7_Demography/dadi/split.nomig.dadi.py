@@ -117,8 +117,9 @@ then  used  samtools  to  call  SNPs.Heterozygosity across the assembled section
 of the O. pumilio genome is H=0.0016. 
 Assuming a mutation rate of 10-9, this would yield an estimate of Ne=400,000. 
 '''
-
-mu=10e-9
+#Mutation rate per year 1e-9, pero generation is 2e-9
+#mu_wrong=10e-9
+mu=2e-9
 L=3306892825 #sites analyses by angsd first round
 
 Nref=theta0/(4*mu*L)
