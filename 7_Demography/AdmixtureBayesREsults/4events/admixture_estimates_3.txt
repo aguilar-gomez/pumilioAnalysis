@@ -1,0 +1,5 @@
+branch label,lower 95%,mean,upper 95%,interpretation
+ax1,0.27,0.2746786226685797,0.276,For the lineages that pass through ax1, this is the proportion that follows branch c17 to node n7
+ax2,0.486,0.4929770444763271,0.495,For the lineages that pass through ax2, this is the proportion that follows branch c19 to node n8
+ax3,0.123,0.12680224772835966,0.14,For the lineages that pass through ax3, this is the proportion that follows branch c15 to node n6
+ax4,0.431,0.4527054041128646,0.459,For the lineages that pass through ax4, this is the proportion that follows branch c18 to node n8

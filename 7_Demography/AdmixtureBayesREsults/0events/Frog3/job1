@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#SBATCH --job-name=adbayes
+#SBATCH --account=ac_popgen
+#SBATCH --partition=savio3
+#SBATCH --qos=savio_normal
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH --mail-user=ahv36@berkeley.edu
+#SBATCH --nodes=1
+#SBATCH --time=72:00:00
+
+module load python
+
+python3.7 ../admixturebayes/runMCMC.py --input_file ../OsylOpumPP.frq --outgroup Osylvatica --n 200000   --MCMC_chains 31  --spacing 1.4 --maxtemp 1000  --result_file output1.csv --max_admixes 0 --num_ind_snps 40000
