@@ -1,23 +1,52 @@
-#Convert to plink bed format
-plink --vcf pumilio_snpCleanv4.vcf --make-bed --out pumilio.v4 --double-id --allow-extra-chr&
+#relatedness file
+nano relatedIndv
 
+#New version ran with plink2
+plink2 --bcf pumilio_version11.bcf  --make-bed --out pumilio.v11 --double-id --allow-extra-chr&
 
-#Calculate relatedness matrix 
-gemma -bfile pumilio.v4 -gk 2 -o pum.v4
- 
-#Use only the relatedness matrix, not PCs
+#Add phenotypes
+cat binaryglarek6_PCs.tsv |tail -n +2>pumilio.v11.fam
 
-#pumilio.v4.fam has sex as phenotype, and the plink column for sex is all set to 0
-#Sex gwas remove covariate of sex!
-nohup gemma -bfile pumilio.v4 -lmm 4 -o sex_nopcs_rescaffold -k pum.v4.sXX.txt 1> sex.out 2> out.sexgemma &  
+#Extract related individuals
+while read line
+do
+grep "$line" pumilio.v11.fam
+done < relatedIndv > related2Exclude.fam
+
+#Remove samples
+plink2 --bfile pumilio.v11 \
+       --remove related2Exclude.fam \
+       --make-bed \
+       --out unrelated_pumilio --allow-extra-chr
+
+#Removing individuals gets rid of the phenotypes
+grep -v -f relatedIndv pumilio.v11.fam > unrelated_pumilioPhenotypesComplete.fam
+#The following outputs nothing so I can replace the file
+diff <(cut -f1,2 unrelated_pumilio.fam) <(cut -f1,2 unrelated_pumilioPhenotypesComplete.fam)
+#Remove CLASS phenotype because it has missing values 
+cut -f1-5,7- unrelated_pumilioPhenotypesComplete.fam >unrelated_pumilio.fam
+
+#Calculate relatedness matrix
+gemma -bfile unrelated_pumilio -gk 2 -o pum_unrelated
+#GEMMA 0.98.5 (2021-08-25) by Xiang Zhou, Pjotr Prins and team (C) 2012-2021
+#Reading Files ... 
+## number of total individuals = 321
+## number of analyzed individuals = 321
+## number of covariates = 1
+## number of phenotypes = 1
+## number of total SNPs/var        = 10231695
+## number of analyzed SNPs         =  1887184
+#Calculating Relatedness Matrix ... 
+#================================================== 100%
+#**** INFO: Done.
 
 #pumilio.v4.fam has sex all the phenotypes, and the sex column is filled out
 #Columns
-#["pop","bam","mom","dad","sex","class1","B1","S1U","S1V","S1B","S1G","S1Y","S1R","blackproportion","vgg16_k6","PC1","PC2","sexgwas"]]
-
-for n in $(seq 1 13)
+#["pop","bam","mom","dad","sex","B1","S1U","S1V","S1B","S1G","S1Y","S1R","blackproportion","vgg16_k6","PC1","PC2","sexgwas"]]
+for n in $(seq 1 12)
 do
 echo $n
-nohup gemma -bfile pumilio.v4 -lmm 4 -o n${n}_rescaffold -k pum.v4.sXX.txt -n $n 1> n$n.out 2> out.gemma.n$n &  
+nohup gemma -bfile unrelated_pumilio -lmm 4 -o n${n}_unrelated -k pum_unrelated.sXX.txt -n $n 1> n$n.out 2> out.gemma.n$n &  
 done
 
+nohup sh runGemma.sh > outGemma &
