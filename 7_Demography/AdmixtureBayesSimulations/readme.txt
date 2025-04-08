@@ -1,0 +1,3 @@
+This the folder for the simulations to benchmark AdmixtureBayes with parameters that match those from the real Pumilio dataset. In each folder (0events and 1events) the script RunALL.sh generates the data, runs AdmixtureBayes and generates the results of the topology equality analysis. The script MakePlots.R makes the boxplots out of these results.
+
+Note: You will need to change the path to AdmixtureBayes to the path on your machine.
