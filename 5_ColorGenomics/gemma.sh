@@ -42,6 +42,7 @@ gemma -bfile unrelated_pumilio -gk 2 -o pum_unrelated
 
 #pumilio.v4.fam has sex all the phenotypes, and the sex column is filled out
 #Columns
+mv output/pum_unrelated.sXX.txt .
 #["pop","bam","mom","dad","sex","B1","S1U","S1V","S1B","S1G","S1Y","S1R","blackproportion","vgg16_k6","PC1","PC2","sexgwas"]]
 for n in $(seq 1 12)
 do
