@@ -51,3 +51,14 @@ nohup gemma -bfile unrelated_pumilio -lmm 4 -o n${n}_unrelated -k pum_unrelated.
 done
 
 nohup sh runGemma.sh > outGemma &
+
+#Change gemma default setting to lose less SNPs for asso
+#-miss .1 (allow missing up to 10%, default 5%)
+
+for n in $(seq 4 7)
+do
+echo $n
+nohup gemma -bfile unrelated_pumilio -lmm 4 -o n${n}_filters -k pum_unrelated.sXX.txt -n $n -miss .1 -r2 0.999999 -maf 0.005 1> n$n.out 2> out.gemmaFilter.n$n &  
+done
+
+nohup sh runGemmaFilter.sh > outGemmaFilter &
